@@ -1888,18 +1888,20 @@ def init_database():
                 app.logger.error(f"Individual table creation failed: {e2}")
 
 
-# --- MAIN ENTRYPOINT ---
+# --- MAIN ENTRYPOINT & INITIALIZATION ---
+
+# Initialize services (running this outside of __main__ ensures it also runs cleanly on gunicorn/Render)
+fast_detector = FastNewsDetector()
+
+# Setup logging
+setup_logging()
+
+# Initialize database tables if they don't exist
+init_database()
+
+app.logger.info('Starting TruthGuard with Gemini AI integration...')
+
 if __name__ == '__main__':
-    # Initialize services
-    fast_detector = FastNewsDetector()
-
-    # Setup logging
-    setup_logging()
-
-    # Initialize database
-    init_database()
-
-    app.logger.info('Starting TruthGuard with Gemini AI integration...')
     app.logger.info(f'✓ Gemini AI: {"Available" if gemini_assistant.available else "Not available"}')
     app.logger.info(f'✓ Gemini Model: {_GEMINI_MODEL if gemini_assistant.available else "N/A"}')
     app.logger.info('✓ Ultra-fast detector ready')
