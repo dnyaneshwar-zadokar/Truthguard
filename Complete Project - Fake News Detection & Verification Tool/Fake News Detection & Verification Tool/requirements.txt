@@ -1,0 +1,13 @@
+Flask
+Flask-SQLAlchemy
+Flask-Login
+SQLAlchemy
+numpy
+pandas
+nltk
+requests
+beautifulsoup4
+python-dotenv
+google-generativeai
+gunicorn
+psycopg2-binary
